@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import type { Role } from "@prisma/client";
+import type { Role } from "@/generated/prisma/client";
 import { auth } from "@/lib/auth";
 
 export async function getCurrentUser() {

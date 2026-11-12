@@ -18,14 +18,14 @@ Reconstrução do MVP em andamento na branch `rebuild/nexo-mvp`. A branch `main`
 
 ## Desenvolvimento local
 
-1. Instale Node.js 22.12 ou superior.
+1. Instale Node.js 22.13 ou superior.
 2. Copie `.env.example` para `.env.local`.
 3. Preencha `DATABASE_URL`, `DIRECT_URL`, `BETTER_AUTH_SECRET` e `BETTER_AUTH_URL` com valores do ambiente.
 4. Instale dependências com `npm install`.
 5. Gere o Prisma Client com `npm run db:generate`.
 6. Inicie com `npm run dev`.
 
-O schema existente do Neon foi inspecionado. Não execute `prisma migrate`, `db push` ou reset até existir uma migration revisada e aprovada para o banco.
+O schema existente do Neon foi inspecionado. A aplicação usa Prisma ORM 7 com o adaptador serverless do Neon. Não execute `prisma migrate`, `db push` ou reset neste banco existente.
 
 Não execute migrations no banco Neon existente sem comparar previamente o schema e fazer backup. Não use `db push` ou comandos de reset em banco com dados que precisam ser preservados.
 

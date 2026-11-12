@@ -20,7 +20,8 @@ Este documento registra a revisão humana feita com base nos requisitos informad
 ## Verificações automatizadas concluídas
 
 - [x] GitHub Actions executou com sucesso: Prisma validate, build Next.js, ESLint e TypeScript check.
-- [x] Dependências principais atualizadas para versões estáveis corrigidas em 12/11/2026.
+- [x] Next.js 16.4.6 e React 19.3.1 atualizados após alerta de segurança.
+- [ ] Prisma ORM 7.10.1 e Zod 4.6.7 atualizados após alertas do npm; aguardar CI com auditoria para marcar como verificados.
 
 ## Itens pendentes de validação antes da entrega
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";

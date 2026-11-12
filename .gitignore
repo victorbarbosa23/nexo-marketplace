@@ -18,3 +18,6 @@ coverage/
 *.log
 .DS_Store
 Thumbs.db
+
+# Prisma Client gerado durante o build
+src/generated/prisma/

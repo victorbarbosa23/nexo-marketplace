@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { Role } from "@prisma/client";
+import type { Role } from "@/generated/prisma/client";
 import { getCurrentUser } from "@/lib/session";
 
 type CurrentUser = NonNullable<Awaited<ReturnType<typeof getCurrentUser>>>;

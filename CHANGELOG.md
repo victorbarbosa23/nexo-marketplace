@@ -5,6 +5,9 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 ## 2026-11-12 — Reconstrução do MVP (em andamento)
 
 ### Segurança e dependências
+- A auditoria npm identificou vulnerabilidade alta em deepmerge-ts via Prisma ORM 6 e em Zod 3. Para corrigir sem ignorar o alerta, o projeto foi atualizado para Prisma ORM 7.10.1 com adaptador oficial do Neon e Zod 4.6.7.
+- Prisma 7 passa a gerar o client em `src/generated/prisma` e a ler a conexão direta do CLI por `prisma.config.ts`; o runtime usa `DATABASE_URL` pooled por `@prisma/adapter-neon`.
+- Nenhuma migration foi aplicada; a alteração é de dependências e configuração do client, mantendo o schema das tabelas existentes.
 - CI identificou alerta de segurança na versão inicial Next.js 16.0.0; atualizado para Next.js 16.4.6, versão estável mais recente verificada em 12/11/2026.
 - Atualizados React e React DOM para 19.3.1 e eslint-config-next para 16.4.6.
 - Atualizado Node.js mínimo de CI para 22.13.0 para satisfazer os requisitos dos pacotes de lint.
