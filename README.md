@@ -2,18 +2,37 @@
 
 Marketplace web para descoberta de produtos digitais de pequenos criadores e vendedores independentes.
 
-## Estado atual
+## Estado da entrega — 12/11/2026
 
-MVP disponível na branch principal `main`. A branch `rebuild/nexo-mvp` também foi preservada como trilha de reconstrução. O histórico do Git mantém os commits do planejamento e do desenvolvimento.
+O MVP está na branch principal `main`, com o histórico de planejamento e desenvolvimento preservado. A branch `rebuild/nexo-mvp` também foi mantida como trilha de reconstrução.
 
-**Estado atual:** a reconstrução já inclui autenticação, catálogo, detalhes de produtos, painéis por perfil e rotas protegidas para vendedores, compradores e administradores. O CI já passou em validação Prisma, build de produção, lint e TypeScript usando URLs de banco fictícias de teste. A publicação na Vercel foi realizada e o endpoint `/api/health` confirmou conexão com o Neon. Cadastro/login e persistência de produtos foram testados manualmente. Ainda faltam validar a correção de atualização automática do formulário, os fluxos de moderação/compra/denúncia e a comparação final com o Anexo B.
+**Aplicação publicada:** [https://nexo-marketplace-7pjz.vercel.app](https://nexo-marketplace-7pjz.vercel.app)
 
-## Stack planejada
+A Vercel confirmou como concluído o deploy do commit `175e0f1` no projeto `nexo-marketplace-7pjz`. O endpoint `/api/health` já foi consultado durante a validação manual e retornou a resposta esperada de conexão com o Neon. A última implantação concluiu com sucesso; os testes funcionais completos devem ser distinguidos dos testes automatizados.
+
+### Validação confirmada
+- Cadastro e login de comprador realizados manualmente.
+- Ativação do perfil de vendedor realizada manualmente.
+- Cadastro de produto realizado e persistência confirmada no Neon.
+- Produtos consultados no painel após atualização manual da página.
+- CI do commit `175e0f1` aprovado: validação Prisma, auditoria de dependências, build de produção, ESLint e TypeScript.
+- Deploy do projeto principal `nexo-marketplace-7pjz` concluído pela Vercel.
+
+### Ainda precisa de validação manual
+- Moderação de produto por uma conta ADMIN.
+- Compra demonstrativa e histórico do comprador.
+- Registro e moderação de denúncia.
+- Teste de acesso anônimo e comparação completa com o Anexo B da apostila.
+
+Há uma segunda integração antiga da Vercel, associada ao projeto `nexo-marketplace`, que reportou falha. A implantação principal usada pelo projeto é `nexo-marketplace-7pjz`, cujo deploy mais recente foi concluído com sucesso.
+
+## Stack
 
 - Next.js App Router e TypeScript
 - PostgreSQL no Neon
-- Prisma ORM
+- Prisma ORM 7
 - Better Auth
+- Git/GitHub
 - Vercel
 
 ## Desenvolvimento local
@@ -25,49 +44,24 @@ MVP disponível na branch principal `main`. A branch `rebuild/nexo-mvp` também 
 5. Gere o Prisma Client com `npm run db:generate`.
 6. Inicie com `npm run dev`.
 
-O schema existente do Neon foi inspecionado. A aplicação usa Prisma ORM 7 com o adaptador serverless do Neon. Não execute `prisma migrate`, `db push` ou reset neste banco existente.
-
-Não execute migrations no banco Neon existente sem comparar previamente o schema e fazer backup. Não use `db push` ou comandos de reset em banco com dados que precisam ser preservados.
+O schema existente do Neon foi inspecionado. A aplicação usa Prisma ORM 7 com o adaptador serverless do Neon. Não execute `prisma migrate`, `db push` ou reset neste banco existente sem revisão e backup.
 
 ## Verificação de conexão
 
-Após a publicação, abra `/api/health` no domínio do projeto. A resposta `status: ok` e `database: connected` confirma que a aplicação conseguiu consultar o Neon. Em caso de indisponibilidade, o endpoint retorna HTTP 503 sem revelar credenciais ou detalhes internos.
+Abra `/api/health` no domínio publicado. A resposta esperada é `status: ok` e `database: connected`. Em caso de indisponibilidade, o endpoint retorna HTTP 503 sem revelar credenciais ou detalhes internos.
 
 ## Variáveis de ambiente
 
-Consulte `.env.example`. Nunca faça commit de arquivos `.env`, senhas, tokens ou strings de conexão reais.
+Consulte `.env.example`. As quatro variáveis de produção foram configuradas na Vercel. Nunca faça commit de arquivos `.env`, senhas, tokens ou strings de conexão reais.
 
 ## Documentação
 
 - [Spec](./spec.md)
 - [Changelog](./CHANGELOG.md)
+- [Checklist preliminar de segurança](./docs/checklist-seguranca.md)
 - [Plano estratégico](./docs/plano-estrategico.md)
-
-
-
-## Publicação na Vercel
-
-1. Importe este repositório no painel da Vercel, selecionando a branch `main` depois que a reconstrução for integrada.
-2. Mantenha o framework como Next.js e o diretório raiz como `./`.
-3. Configure estas variáveis no ambiente Production:
-   - `DATABASE_URL`: string pooled do Neon (host com `-pooler`).
-   - `DIRECT_URL`: string direta do mesmo banco e branch.
-   - `BETTER_AUTH_SECRET`: segredo aleatório forte, com pelo menos 32 caracteres.
-   - `BETTER_AUTH_URL`: URL HTTPS final do projeto Vercel, sem barra no final.
-4. Não configure migrations ou `db push` para este banco existente. O schema foi alinhado por inspeção; nenhuma migration é necessária para a versão atual.
-5. Faça o deploy e abra `https://SEU-DOMINIO/api/health`. A resposta deve indicar `status: ok` e `database: connected`.
-
-Gere o segredo localmente, por exemplo com `openssl rand -base64 32`. Não o envie pelo chat nem o salve no GitHub.
-
-## Roteiro de teste manual
-
-1. Abra a aplicação publicada e crie uma conta de comprador.
-2. Entre no painel e ative o perfil de vendedor.
-3. Cadastre um produto e confirme que ele aparece como PENDENTE no painel do vendedor.
-4. Promova a conta administradora conforme o procedimento abaixo e entre novamente.
-5. No painel administrativo, aprove o produto.
-6. Abra o catálogo em uma sessão de comprador, acesse o produto e registre a compra demonstrativa.
-7. Confira o histórico do comprador e teste o registro de uma denúncia.
+- [Histórico de commits](https://github.com/victorbarbosa23/nexo-marketplace/commits/main)
+- [Execução mais recente do CI](https://github.com/victorbarbosa23/nexo-marketplace/actions/runs/43326575007)
 
 ## Primeiro administrador
 

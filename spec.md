@@ -1,7 +1,7 @@
 # Nexo — Especificação do Sistema
 
 ## Estado da especificação
-Esta especificação descreve o MVP planejado e está sendo reconciliada com o banco Neon existente. A implementação está na branch `main` e a trilha de reconstrução permanece na branch `rebuild/nexo-mvp`; requisitos não testados não devem ser considerados concluídos.
+Esta especificação registra o MVP planejado e o estado observado em 12/11/2026. A implementação está na branch `main`; a branch `rebuild/nexo-mvp` foi preservada como trilha de reconstrução. Os itens abaixo distinguem funcionalidades implementadas, verificações realizadas e testes ainda não executados.
 
 ## 1. Objetivo
 Marketplace web de descoberta de produtos digitais de pequenos criadores e vendedores independentes, para compradores que procuram produtos específicos ou de nicho.
@@ -29,9 +29,9 @@ Marketplace web de descoberta de produtos digitais de pequenos criadores e vende
 - RF14 ADMIN consulta e atualiza status de denúncias.
 
 ## 4. Requisitos não funcionais
-- Senhas protegidas por hash via biblioteca de autenticação.
+- Senhas gerenciadas pela biblioteca de autenticação Better Auth.
 - Validação de entrada no servidor.
-- Prisma ORM ou consultas parametrizadas.
+- Prisma ORM para acesso ao banco.
 - Segredos apenas em variáveis de ambiente.
 - Verificação de sessão, papel e propriedade no servidor.
 - Cookies de sessão seguros em produção.
@@ -75,13 +75,12 @@ Sem pagamentos reais, repasses, entrega automática de arquivos, chat, avaliaç�
 ## 8. Stack e implantação
 Next.js App Router, TypeScript, PostgreSQL/Neon, Prisma, Better Auth, Git/GitHub e Vercel. Variáveis: DATABASE_URL, DIRECT_URL, BETTER_AUTH_SECRET e BETTER_AUTH_URL. Nunca versionar credenciais reais.
 
+Aplicação publicada em: https://nexo-marketplace-7pjz.vercel.app
+
 ## 9. Segurança e banco
-Não aplicar migrations destrutivas, reset ou db push no banco Neon existente. Conferir schema com introspecção controlada e backup antes de qualquer migration. Nenhuma migration será aplicada sem revisão.
+Não aplicar migrations destrutivas, reset ou db push no banco Neon existente. Conferir schema com introspecção controlada e backup antes de qualquer migration. Nenhuma migration foi aplicada durante a inspeção do banco.
 
-## 10. Condição de conclusão
-A entrega só estará concluída quando o fluxo principal persistir no Neon, os critérios de aceite forem testados, o checklist de segurança for revisado, a aplicação estiver publicada em HTTPS e o repositório/histórico/documentação estiverem acessíveis ao professor.
-
-## 11. Estado real da implementação em 12/11/2026
+## 10. Estado real e validação em 12/11/2026
 
 ### Implementado no código
 - Cadastro por e-mail e senha, login e logout com Better Auth.
@@ -93,23 +92,30 @@ A entrega só estará concluída quando o fluxo principal persistir no Neon, os 
 - Aprovação e rejeição de produtos pelo administrador.
 - Registro de compra SIMULADA e histórico restrito ao comprador; não há pagamento real.
 - Registro de denúncias por compradores e vendedores e atualização de status pelo administrador.
-- Endpoint /api/health para verificar conectividade com PostgreSQL após a publicação.
+- Endpoint `/api/health` para verificar conectividade com PostgreSQL após a publicação.
 
-### Verificações concluídas
+### Verificações automatizadas concluídas
 - Schema Prisma validado com Prisma ORM 7.10.1.
 - Build de produção Next.js concluído no GitHub Actions.
 - ESLint e TypeScript concluídos no GitHub Actions.
-- npm audit --audit-level=high concluído sem vulnerabilidades de severidade alta ou crítica no conjunto instalado.
+- `npm audit --audit-level=high` concluído sem vulnerabilidades de severidade alta ou crítica no conjunto instalado.
+- CI do commit `175e0f1` concluído com sucesso.
+- A Vercel confirmou o deploy do commit `175e0f1` no projeto principal `nexo-marketplace-7pjz`.
 
-### Ainda não verificado
-- Teste funcional com credenciais reais do Neon; o CI usa URLs fictícias e não acessa o banco de produção.
-- Testes manuais dos fluxos com contas reais de cada papel.
-- Comparação integral com o Anexo B da apostila.
-- Publicação e teste anônimo da aplicação na Vercel.
-
-
-## Registro de validação manual — 12/11/2026
-- Cadastro e login de usuário comprador realizados na Vercel.
+### Verificações manuais confirmadas
+- Cadastro e login de usuário comprador realizados na aplicação publicada.
 - Perfil de vendedor ativado com sucesso.
-- Cadastro de produtos confirmado: os registros persistiram no Neon e foram exibidos no painel após atualização manual.
-- A inspeção humana identificou e corrigiu uma falha de atualização da interface após o POST assíncrono; validar mensagem de sucesso e atualização automática no novo deploy.
+- Cadastro de produtos realizado; os registros persistiram no Neon e apareceram no painel após atualização manual.
+- Endpoint `/api/health` consultado anteriormente e resposta esperada de conexão com o Neon confirmada pelo usuário.
+- Um erro de origem inválida ocorreu ao acessar uma URL de Preview da Vercel; o uso do domínio principal configurado resolveu o acesso à autenticação.
+
+### Ainda não verificado manualmente
+- Aprovação/rejeição de produto com conta ADMIN.
+- Compra simulada e consulta do histórico de compras.
+- Registro de denúncia e moderação pelo ADMIN.
+- Teste de todos os fluxos em janela anônima após o último deploy.
+- Comparação integral com todos os itens do Anexo B da apostila.
+- Verificação independente do endpoint `/api/health` após o último deploy (a resposta já havia sido confirmada na publicação anterior).
+
+## 11. Condição de conclusão
+O repositório público, histórico de commits, documentação e deploy principal estão disponíveis. Os testes automatizados e os fluxos manuais de cadastro, login, ativação de vendedor e persistência de produtos foram confirmados. Os fluxos administrativos, de compra e denúncia e a conferência integral do Anexo B permanecem como limitações de validação e não são declarados como testes concluídos.
