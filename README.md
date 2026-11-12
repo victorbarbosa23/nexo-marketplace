@@ -4,7 +4,7 @@ Marketplace web para descoberta de produtos digitais de pequenos criadores e ven
 
 ## Estado atual
 
-MVP reconstruído na branch `rebuild/nexo-mvp`, com integração pronta para ser incorporada à branch principal após a validação automática. O histórico preserva os commits do planejamento e da reconstrução.
+MVP disponível na branch principal `main`. A branch `rebuild/nexo-mvp` também foi preservada como trilha de reconstrução. O histórico do Git mantém os commits do planejamento e do desenvolvimento.
 
 **Estado atual:** a reconstrução já inclui autenticação, catálogo, detalhes de produtos, painéis por perfil e rotas protegidas para vendedores, compradores e administradores. O CI já passou em validação Prisma, build de produção, lint e TypeScript usando URLs de banco fictícias de teste. Ainda faltam testes funcionais conectados ao Neon real, comparação final do Anexo B e publicação na Vercel.
 

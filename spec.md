@@ -1,7 +1,7 @@
 # Nexo — Especificação do Sistema
 
 ## Estado da especificação
-Esta especificação descreve o MVP planejado e está sendo reconciliada com o banco Neon existente. A implementação permanece em reconstrução na branch `rebuild/nexo-mvp`; requisitos não testados não devem ser considerados concluídos.
+Esta especificação descreve o MVP planejado e está sendo reconciliada com o banco Neon existente. A implementação está na branch `main` e a trilha de reconstrução permanece na branch `rebuild/nexo-mvp`; requisitos não testados não devem ser considerados concluídos.
 
 ## 1. Objetivo
 Marketplace web de descoberta de produtos digitais de pequenos criadores e vendedores independentes, para compradores que procuram produtos específicos ou de nicho.

@@ -60,6 +60,8 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - CI do commit 5ec8377 passou integralmente após a migração: Prisma validate, npm audit --audit-level=high, build de produção Next.js, ESLint e TypeScript. O CI usa URLs fictícias; não substitui o teste de conexão com o Neon real.
 - A migração para Prisma ORM 7.10.1 e o adaptador Neon foi validada pelo build; Zod 4.6.7 passou no lint e no typecheck.
 
+- Após CI verde, a branch `rebuild/nexo-mvp` foi integrada à `main` por avanço rápido, preservando todo o histórico de commits.
+
 ### Pendências
 - Executar validação Prisma e comparação read-only com o Neon; revisar compatibilidade da introspecção e dos índices.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.
