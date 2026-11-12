@@ -6,7 +6,7 @@ Marketplace web para descoberta de produtos digitais de pequenos criadores e ven
 
 MVP disponível na branch principal `main`. A branch `rebuild/nexo-mvp` também foi preservada como trilha de reconstrução. O histórico do Git mantém os commits do planejamento e do desenvolvimento.
 
-**Estado atual:** a reconstrução já inclui autenticação, catálogo, detalhes de produtos, painéis por perfil e rotas protegidas para vendedores, compradores e administradores. O CI já passou em validação Prisma, build de produção, lint e TypeScript usando URLs de banco fictícias de teste. Ainda faltam testes funcionais conectados ao Neon real, comparação final do Anexo B e publicação na Vercel.
+**Estado atual:** a reconstrução já inclui autenticação, catálogo, detalhes de produtos, painéis por perfil e rotas protegidas para vendedores, compradores e administradores. O CI já passou em validação Prisma, build de produção, lint e TypeScript usando URLs de banco fictícias de teste. A publicação na Vercel foi realizada e o endpoint `/api/health` confirmou conexão com o Neon. Cadastro/login e persistência de produtos foram testados manualmente. Ainda faltam validar a correção de atualização automática do formulário, os fluxos de moderação/compra/denúncia e a comparação final com o Anexo B.
 
 ## Stack planejada
 

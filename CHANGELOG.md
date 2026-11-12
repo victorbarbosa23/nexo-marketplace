@@ -74,3 +74,10 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 ## 2026-10-23 — Planejamento inicial
 - Criada a especificação do MVP, o plano estratégico e a estrutura documental.
 - Escopo definido: cadastro/login, publicação e moderação de produtos, catálogo, compra simulada, histórico e denúncias.
+
+
+## 12/11/2026 — Correção após teste funcional na Vercel
+- Revisão humana do fluxo real de cadastro de produto identificou que a referência `event.currentTarget` era acessada após um `await`, quando já não é garantida pelo React.
+- O produto era persistido no Neon, mas a exceção interrompia a limpeza do formulário, a mensagem de sucesso e a atualização da lista; isso permitia novas tentativas e registros duplicados.
+- Corrigido ao capturar a referência do formulário antes da operação assíncrona, adicionar tratamento de exceções e manter o botão desabilitado durante o envio.
+- O teste real confirmou a gravação e a consulta dos produtos no Neon; a correção visual será validada no novo deploy.

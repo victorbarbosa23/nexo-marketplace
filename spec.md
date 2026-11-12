@@ -106,3 +106,10 @@ A entrega só estará concluída quando o fluxo principal persistir no Neon, os 
 - Testes manuais dos fluxos com contas reais de cada papel.
 - Comparação integral com o Anexo B da apostila.
 - Publicação e teste anônimo da aplicação na Vercel.
+
+
+## Registro de validação manual — 12/11/2026
+- Cadastro e login de usuário comprador realizados na Vercel.
+- Perfil de vendedor ativado com sucesso.
+- Cadastro de produtos confirmado: os registros persistiram no Neon e foram exibidos no painel após atualização manual.
+- A inspeção humana identificou e corrigiu uma falha de atualização da interface após o POST assíncrono; validar mensagem de sucesso e atualização automática no novo deploy.
