@@ -38,3 +38,24 @@ Consulte `.env.example`. Nunca faça commit de arquivos `.env`, senhas, tokens o
 - [Spec](./spec.md)
 - [Changelog](./CHANGELOG.md)
 - [Plano estratégico](./docs/plano-estrategico.md)
+
+
+## Primeiro administrador
+
+O cadastro público cria somente contas COMPRADOR. Para conceder o papel ADMIN ao primeiro usuário, primeiro crie a conta normalmente pela tela de cadastro. Depois, no SQL Editor do Neon, execute uma atualização restrita ao e-mail exato dessa conta:
+
+```sql
+UPDATE public."user"
+SET role = 'ADMIN'
+WHERE email = 'SEU_EMAIL_DE_LOGIN';
+```
+
+Substitua o texto pelo e-mail usado no cadastro. Confira o resultado com:
+
+```sql
+SELECT id, name, email, role
+FROM public."user"
+WHERE email = 'SEU_EMAIL_DE_LOGIN';
+```
+
+Não exponha credenciais no repositório. Faça essa promoção apenas para a conta administradora responsável pelo projeto.

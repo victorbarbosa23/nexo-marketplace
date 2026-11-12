@@ -31,6 +31,9 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - A branch de reconstrução permanece separada da main para revisão sem substituir o planejamento original.
 - A compatibilidade Better Auth/Prisma, build, rotas de negócio, painéis por perfil, testes e deploy ainda precisam ser validados.
 
+- Implementadas rotas protegidas para cadastro de produtos, edição própria, moderação, compra simulada, histórico e denúncias; pendente validação funcional com banco real.
+- Implementados catálogo filtrável, detalhes de produto e painéis por perfil; a execução de CI confirmou Prisma validate, build Next.js e TypeScript no commit de implementação.
+
 ### Pendências
 - Executar validação Prisma e comparação read-only com o Neon; revisar compatibilidade da introspecção e dos índices.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.

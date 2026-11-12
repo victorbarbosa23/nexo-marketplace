@@ -33,7 +33,7 @@ export default async function Dashboard() {
 
   if (role === "VENDEDOR") {
     const products = await prisma.product.findMany({ where: { sellerId: user.id }, orderBy: { createdAt: "desc" } });
-    return <main className="page-shell"><header className="page-header"><Link className="logo" href="/">nexo<span>.</span></Link><nav><Link href="/catalogo">Catálogo</Link></nav></header><section className="page-content">
+    return <main className="page-shell"><header className="page-header"><Link className="logo" href="/">nexo<span>.</span></Link><nav><Link href="/catalogo">Catálogo</Link><SignOutButton /></nav></header><section className="page-content">
       <p className="eyebrow">PAINEL DO VENDEDOR</p><h1>Olá, {user.name}.</h1><p className="muted">Cadastre seus produtos e acompanhe o status de cada publicação.</p>
       <ProductCreateForm />
       <div className="section-heading"><h2>Meus produtos</h2><span>{products.length} produto(s)</span></div>
