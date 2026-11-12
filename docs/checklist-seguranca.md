@@ -17,6 +17,11 @@ Este documento registra a revisão humana feita com base nos requisitos informad
 - [x] Segredos lidos de variáveis de ambiente; arquivos .env ignorados pelo Git, exceto .env.example.
 - [x] Compra explicitamente demonstrativa, sem gateway, cobrança ou armazenamento de cartão.
 
+## Verificações automatizadas concluídas
+
+- [x] GitHub Actions executou com sucesso: Prisma validate, build Next.js, ESLint e TypeScript check.
+- [x] Dependências principais atualizadas para versões estáveis corrigidas em 12/11/2026.
+
 ## Itens pendentes de validação antes da entrega
 
 - [ ] Confirmar no fluxo real de cadastro que a senha armazenada pelo Better Auth está protegida por hash e nunca aparece em logs.

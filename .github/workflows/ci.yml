@@ -29,6 +29,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Validate Prisma schema
         run: npx prisma validate
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
       - name: Build application
         run: npm run build
       - name: Lint

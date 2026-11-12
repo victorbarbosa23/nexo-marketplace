@@ -6,7 +6,7 @@ Marketplace web para descoberta de produtos digitais de pequenos criadores e ven
 
 Reconstrução do MVP em andamento na branch `rebuild/nexo-mvp`. A branch `main` preserva o planejamento inicial. O código desta branch contém a fundação Next.js, TypeScript, Prisma e Better Auth, além da interface pública inicial e telas de autenticação.
 
-**Estado atual:** a reconstrução já inclui autenticação, catálogo, detalhes de produtos, painéis por perfil e rotas protegidas para vendedores, compradores e administradores. Ainda faltam validação funcional com o banco Neon real, revisão final de segurança e publicação na Vercel.
+**Estado atual:** a reconstrução já inclui autenticação, catálogo, detalhes de produtos, painéis por perfil e rotas protegidas para vendedores, compradores e administradores. O CI já passou em validação Prisma, build de produção, lint e TypeScript usando URLs de banco fictícias de teste. Ainda faltam testes funcionais conectados ao Neon real, comparação final do Anexo B e publicação na Vercel.
 
 ## Stack planejada
 
