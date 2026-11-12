@@ -1,7 +1,7 @@
 # Nexo — Especificação do Sistema
 
 ## Estado da especificação
-Esta é a especificação-base aprovada para o MVP. A reconstrução do código está em andamento na branch `rebuild/nexo-mvp`. A existência de código parcial não significa que todos os critérios estejam implementados ou testados.
+Esta especificação descreve o MVP planejado e está sendo reconciliada com o banco Neon existente. A implementação permanece em reconstrução na branch `rebuild/nexo-mvp`; requisitos não testados não devem ser considerados concluídos.
 
 ## 1. Objetivo
 Marketplace web de descoberta de produtos digitais de pequenos criadores e vendedores independentes, para compradores que procuram produtos específicos ou de nicho.
@@ -31,7 +31,7 @@ Marketplace web de descoberta de produtos digitais de pequenos criadores e vende
 ## 4. Requisitos não funcionais
 - Senhas protegidas por hash via biblioteca de autenticação.
 - Validação de entrada no servidor.
-- Prisma/ORM ou consultas parametrizadas.
+- Prisma ORM ou consultas parametrizadas.
 - Segredos apenas em variáveis de ambiente.
 - Verificação de sessão, papel e propriedade no servidor.
 - Cookies de sessão seguros em produção.
@@ -39,11 +39,15 @@ Marketplace web de descoberta de produtos digitais de pequenos criadores e vende
 - HTTPS e interface responsiva.
 - Persistência real em PostgreSQL.
 
-## 5. Modelo de dados
-- User, Session, Account, Verification (autenticação).
-- Product (sellerId, name, description, category, niche, price, status).
-- Purchase (buyerId, productId, priceAtPurchase, status).
-- Report (reporterId, productId, reason, description, status).
+## 5. Modelo de dados observado no Neon
+As consultas de leitura executadas em 12/11/2026 identificaram as tabelas `account`, `product`, `purchase`, `report`, `session`, `user` e `verification`.
+- `Role`: ADMIN, COMPRADOR, VENDEDOR.
+- `ProductStatus`: APROVADO, PENDENTE, REJEITADO.
+- `PurchaseStatus`: SIMULADA.
+- `ReportStatus`: ABERTA, EM_ANALISE, RESOLVIDA.
+- Chaves estrangeiras observadas: account.userId -> user.id; session.userId -> user.id; product.sellerId -> user.id; purchase.buyerId -> user.id; purchase.productId -> product.id; report.reporterId -> user.id; report.productId -> product.id.
+- A tabela `report` não possui coluna `updatedAt` na inspeção realizada. O schema Prisma foi ajustado para não presumir essa coluna.
+- A existência de índices únicos de e-mail e token ainda precisa ser conferida separadamente.
 
 ## 6. Limites do MVP
 Sem pagamentos reais, repasses, entrega automática de arquivos, chat, avaliações, afiliados, recomendação por IA ou aplicativo nativo. A compra é somente demonstrativa.
@@ -53,7 +57,7 @@ Sem pagamentos reais, repasses, entrega automática de arquivos, chat, avaliaç�
 - AC02 login/logout funcional.
 - AC03 acesso não autorizado negado no servidor.
 - AC04 vendedor cria produto PENDENTE.
-- AC05 vendedor só vê/edita seus produtos.
+- AC05 vendedor só vê/edita produtos próprios.
 - AC06 ADMIN aprova/rejeita.
 - AC07 catálogo exibe apenas aprovados.
 - AC08 pesquisa retorna correspondências aprovadas.
@@ -66,10 +70,10 @@ Sem pagamentos reais, repasses, entrega automática de arquivos, chat, avaliaç�
 - AC15 build, testes e desempenho básico verificados antes da entrega.
 
 ## 8. Stack e implantação
-Next.js App Router, TypeScript, PostgreSQL/Neon, Prisma, Better Auth, Git/GitHub e Vercel. Variáveis: DATABASE_URL, DIRECT_URL, BETTER_AUTH_SECRET e BETTER_AUTH_URL. ADMIN_EMAIL e ADMIN_INITIAL_PASSWORD somente se usados por procedimento protegido de provisionamento.
+Next.js App Router, TypeScript, PostgreSQL/Neon, Prisma, Better Auth, Git/GitHub e Vercel. Variáveis: DATABASE_URL, DIRECT_URL, BETTER_AUTH_SECRET e BETTER_AUTH_URL. Nunca versionar credenciais reais.
 
 ## 9. Segurança e banco
-Não aplicar migrations destrutivas, reset ou db push no banco Neon existente. Primeiro inspecionar o schema real, fazer backup e preparar migration revisada. Nenhuma credencial real deve ser versionada.
-
+Não aplicar migrations destrutivas, reset ou db push no banco Neon existente. Primeiro inspecionar o schema real, conferir índices e constraints, comparar a saída de `prisma db pull` em ambiente controlado e fazer backup. Nenhuma migration será aplicada sem revisão.
+ 
 ## 10. Condição de conclusão
 A entrega só estará concluída quando o fluxo principal persistir no Neon, os critérios de aceite forem testados, o checklist de segurança for revisado, a aplicação estiver publicada em HTTPS e o repositório/histórico/documentação estiverem acessíveis ao professor.

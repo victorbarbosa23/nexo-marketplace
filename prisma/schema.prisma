@@ -1,122 +1,145 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+enum Role {
+  ADMIN
+  COMPRADOR
+  VENDEDOR
+}
+
 enum ProductStatus {
-  PENDENTE
   APROVADO
+  PENDENTE
   REJEITADO
 }
+
 enum PurchaseStatus {
   SIMULADA
 }
+
 enum ReportStatus {
   ABERTA
   EM_ANALISE
   RESOLVIDA
 }
+
 model User {
-  id String @id
-  name String
-  email String @unique
-  emailVerified Boolean @default(false)
-  image String?
-  role String @default("COMPRADOR")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  sessions Session[]
-  accounts Account[]
-  products Product[] @relation("SellerProducts")
-  purchases Purchase[] @relation("BuyerPurchases")
-  reports Report[] @relation("ReporterReports")
+  id            String     @id
+  name          String
+  email         String     @unique
+  emailVerified Boolean    @default(false)
+  image         String?
+  role          Role       @default(COMPRADOR)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  products      Product[]  @relation("SellerProducts")
+  purchases     Purchase[] @relation("BuyerPurchases")
+  reports       Report[]   @relation("ReporterReports")
+
   @@map("user")
 }
+
 model Session {
-  id String @id
+  id        String   @id
   expiresAt DateTime
-  token String @unique
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
-  userId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
   @@map("session")
 }
+
 model Account {
-  id String @id
-  accountId String
-  providerId String
-  userId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken String?
-  refreshToken String?
-  idToken String?
-  accessTokenExpiresAt DateTime?
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
-  scope String?
-  password String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
   @@index([userId])
   @@map("account")
 }
+
 model Verification {
-  id String @id
+  id         String   @id
   identifier String
-  value String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
   @@index([identifier])
   @@map("verification")
 }
+
 model Product {
-  id String @id @default(cuid())
-  sellerId String
-  seller User @relation("SellerProducts", fields: [sellerId], references: [id], onDelete: Restrict)
-  name String
+  id          String        @id @default(cuid())
+  sellerId    String
+  seller      User          @relation("SellerProducts", fields: [sellerId], references: [id], onDelete: Restrict)
+  name        String
   description String
-  category String
-  niche String
-  price Decimal @db.Decimal(10, 2)
-  status ProductStatus @default(PENDENTE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  purchases Purchase[]
-  reports Report[]
+  category    String
+  niche       String
+  price       Decimal       @db.Decimal(10, 2)
+  status      ProductStatus @default(PENDENTE)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  purchases   Purchase[]
+  reports     Report[]
+
   @@index([status, createdAt])
   @@index([sellerId, createdAt])
   @@index([category, niche])
 }
+
 model Purchase {
-  id String @id @default(cuid())
-  buyerId String
-  buyer User @relation("BuyerPurchases", fields: [buyerId], references: [id], onDelete: Restrict)
-  productId String
-  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
-  priceAtPurchase Decimal @db.Decimal(10, 2)
-  status PurchaseStatus @default(SIMULADA)
-  createdAt DateTime @default(now())
+  id              String         @id @default(cuid())
+  buyerId         String
+  buyer           User           @relation("BuyerPurchases", fields: [buyerId], references: [id], onDelete: Restrict)
+  productId       String
+  product         Product        @relation(fields: [productId], references: [id], onDelete: Restrict)
+  priceAtPurchase Decimal        @db.Decimal(10, 2)
+  status          PurchaseStatus @default(SIMULADA)
+  createdAt       DateTime       @default(now())
+
   @@index([buyerId, createdAt])
   @@index([productId])
 }
+
 model Report {
-  id String @id @default(cuid())
-  reporterId String
-  reporter User @relation("ReporterReports", fields: [reporterId], references: [id], onDelete: Restrict)
-  productId String
-  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
-  reason String
+  id          String       @id @default(cuid())
+  reporterId  String
+  reporter    User         @relation("ReporterReports", fields: [reporterId], references: [id], onDelete: Restrict)
+  productId   String
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Restrict)
+  reason      String
   description String
-  status ReportStatus @default(ABERTA)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status      ReportStatus @default(ABERTA)
+  createdAt   DateTime     @default(now())
+
   @@index([status, createdAt])
   @@index([reporterId])
   @@index([productId])
