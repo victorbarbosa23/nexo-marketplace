@@ -29,6 +29,10 @@ O schema existente do Neon foi inspecionado. Não execute `prisma migrate`, `db 
 
 Não execute migrations no banco Neon existente sem comparar previamente o schema e fazer backup. Não use `db push` ou comandos de reset em banco com dados que precisam ser preservados.
 
+## Verificação de conexão
+
+Após a publicação, abra `/api/health` no domínio do projeto. A resposta `status: ok` e `database: connected` confirma que a aplicação conseguiu consultar o Neon. Em caso de indisponibilidade, o endpoint retorna HTTP 503 sem revelar credenciais ou detalhes internos.
+
 ## Variáveis de ambiente
 
 Consulte `.env.example`. Nunca faça commit de arquivos `.env`, senhas, tokens ou strings de conexão reais.

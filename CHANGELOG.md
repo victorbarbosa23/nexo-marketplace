@@ -50,6 +50,8 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - CI do GitHub passou no commit 3fcc6d7: validação Prisma, build de produção Next.js, lint e TypeScript. A rotina usa URLs fictícias e não comprova conexão com o Neon real.
 - Atualizadas as dependências para Next.js 16.4.6, React/React DOM 19.3.1 e eslint-config-next 16.4.6; Node mínimo definido em 22.13.0.
 
+- Adicionado endpoint público mínimo `/api/health` para verificar a conectividade com o PostgreSQL após o deploy, sem expor detalhes internos.
+
 ### Pendências
 - Executar validação Prisma e comparação read-only com o Neon; revisar compatibilidade da introspecção e dos índices.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.
