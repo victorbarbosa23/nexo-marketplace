@@ -23,8 +23,9 @@ Reconstrução do MVP em andamento na branch `rebuild/nexo-mvp`. A branch `main`
 3. Preencha `DATABASE_URL`, `DIRECT_URL`, `BETTER_AUTH_SECRET` e `BETTER_AUTH_URL` com valores do ambiente.
 4. Instale dependências com `npm install`.
 5. Gere o Prisma Client com `npm run db:generate`.
-6. Após revisar o schema contra o banco de destino e criar/aprovar uma migration, execute `npx prisma migrate deploy`.
-7. Inicie com `npm run dev`.
+6. Inicie com `npm run dev`.
+
+O schema existente do Neon foi inspecionado. Não execute `prisma migrate`, `db push` ou reset até existir uma migration revisada e aprovada para o banco.
 
 Não execute migrations no banco Neon existente sem comparar previamente o schema e fazer backup. Não use `db push` ou comandos de reset em banco com dados que precisam ser preservados.
 

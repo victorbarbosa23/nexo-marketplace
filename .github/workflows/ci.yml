@@ -1,0 +1,35 @@
+name: Nexo CI
+
+on:
+  push:
+    branches:
+      - rebuild/nexo-mvp
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nexo?schema=public
+      DIRECT_URL: postgresql://postgres:postgres@localhost:5432/nexo?schema=public
+      BETTER_AUTH_SECRET: ci-only-secret-not-used-outside-build-validation-123456
+      BETTER_AUTH_URL: http://localhost:3000
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.12.0"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate Prisma schema
+        run: npx prisma validate
+      - name: Build application
+        run: npm run build
+      - name: TypeScript check
+        run: npm run typecheck
