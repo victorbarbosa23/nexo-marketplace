@@ -31,5 +31,7 @@ jobs:
         run: npx prisma validate
       - name: Build application
         run: npm run build
+      - name: Lint
+        run: npm run lint
       - name: TypeScript check
         run: npm run typecheck

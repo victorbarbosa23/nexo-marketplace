@@ -34,6 +34,10 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - Implementadas rotas protegidas para cadastro de produtos, edição própria, moderação, compra simulada, histórico e denúncias; pendente validação funcional com banco real.
 - Implementados catálogo filtrável, detalhes de produto e painéis por perfil; a execução de CI confirmou Prisma validate, build Next.js e TypeScript no commit de implementação.
 
+- Adicionado controle de edição de produto próprio, logout e restrição visual dos botões de compra/denúncia conforme o perfil autenticado.
+- Corrigida a captura do formulário antes de operações assíncronas para evitar uso tardio de `currentTarget`.
+- Adicionada tipagem explícita dos produtos exibidos na página inicial.
+
 ### Pendências
 - Executar validação Prisma e comparação read-only com o Neon; revisar compatibilidade da introspecção e dos índices.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.
