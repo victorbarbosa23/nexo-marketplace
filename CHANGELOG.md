@@ -4,6 +4,12 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 
 ## 2026-11-12 — Reconstrução do MVP (em andamento)
 
+### Segurança e dependências
+- CI identificou alerta de segurança na versão inicial Next.js 16.0.0; atualizado para Next.js 16.4.6, versão estável mais recente verificada em 12/11/2026.
+- Atualizados React e React DOM para 19.3.1 e eslint-config-next para 16.4.6.
+- Atualizado Node.js mínimo de CI para 22.13.0 para satisfazer os requisitos dos pacotes de lint.
+- A atualização será considerada validada após o novo build e a checagem de dependências no CI.
+
 ### Adicionado
 - Criada a branch isolada `rebuild/nexo-mvp`, preservando a branch `main` e o histórico anterior.
 - Adicionada a estrutura inicial Next.js App Router, TypeScript e scripts de projeto.
