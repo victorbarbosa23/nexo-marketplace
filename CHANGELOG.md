@@ -52,6 +52,8 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 
 - Adicionado endpoint público mínimo `/api/health` para verificar a conectividade com o PostgreSQL após o deploy, sem expor detalhes internos.
 
+- Documentado o procedimento de publicação na Vercel, variáveis de ambiente e roteiro de teste manual pós-deploy.
+
 ### Pendências
 - Executar validação Prisma e comparação read-only com o Neon; revisar compatibilidade da introspecção e dos índices.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.

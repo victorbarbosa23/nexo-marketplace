@@ -44,6 +44,31 @@ Consulte `.env.example`. Nunca faça commit de arquivos `.env`, senhas, tokens o
 - [Plano estratégico](./docs/plano-estrategico.md)
 
 
+
+## Publicação na Vercel
+
+1. Importe este repositório no painel da Vercel, selecionando a branch `main` depois que a reconstrução for integrada.
+2. Mantenha o framework como Next.js e o diretório raiz como `./`.
+3. Configure estas variáveis no ambiente Production:
+   - `DATABASE_URL`: string pooled do Neon (host com `-pooler`).
+   - `DIRECT_URL`: string direta do mesmo banco e branch.
+   - `BETTER_AUTH_SECRET`: segredo aleatório forte, com pelo menos 32 caracteres.
+   - `BETTER_AUTH_URL`: URL HTTPS final do projeto Vercel, sem barra no final.
+4. Não configure migrations ou `db push` para este banco existente. O schema foi alinhado por inspeção; nenhuma migration é necessária para a versão atual.
+5. Faça o deploy e abra `https://SEU-DOMINIO/api/health`. A resposta deve indicar `status: ok` e `database: connected`.
+
+Gere o segredo localmente, por exemplo com `openssl rand -base64 32`. Não o envie pelo chat nem o salve no GitHub.
+
+## Roteiro de teste manual
+
+1. Abra a aplicação publicada e crie uma conta de comprador.
+2. Entre no painel e ative o perfil de vendedor.
+3. Cadastre um produto e confirme que ele aparece como PENDENTE no painel do vendedor.
+4. Promova a conta administradora conforme o procedimento abaixo e entre novamente.
+5. No painel administrativo, aprove o produto.
+6. Abra o catálogo em uma sessão de comprador, acesse o produto e registre a compra demonstrativa.
+7. Confira o histórico do comprador e teste o registro de uma denúncia.
+
 ## Primeiro administrador
 
 O cadastro público cria somente contas COMPRADOR. Para conceder o papel ADMIN ao primeiro usuário, primeiro crie a conta normalmente pela tela de cadastro. Depois, no SQL Editor do Neon, execute uma atualização restrita ao e-mail exato dessa conta:
