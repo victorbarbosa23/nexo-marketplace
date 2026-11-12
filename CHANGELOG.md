@@ -38,6 +38,9 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - Corrigida a captura do formulário antes de operações assíncronas para evitar uso tardio de `currentTarget`.
 - Adicionada tipagem explícita dos produtos exibidos na página inicial.
 
+- Removidas variáveis de provisionamento administrativo que não eram utilizadas; a promoção inicial de ADMIN é feita por ação explícita e documentada no Neon.
+- Ajustado o limite de preço para respeitar a precisão de duas casas decimais da coluna NUMERIC(10,2).
+
 ### Pendências
 - Executar validação Prisma e comparação read-only com o Neon; revisar compatibilidade da introspecção e dos índices.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.

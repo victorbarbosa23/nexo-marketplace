@@ -9,7 +9,7 @@ const productSchema = z.object({
   description: z.string().trim().min(10).max(3000),
   category: z.string().trim().min(2).max(60),
   niche: z.string().trim().min(2).max(60),
-  price: z.coerce.number().positive().max(100000).finite(),
+  price: z.coerce.number().min(0.01).max(100000).finite(),
 });
 
 export async function GET(request: NextRequest) {
