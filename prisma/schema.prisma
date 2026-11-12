@@ -57,7 +57,7 @@ model Session {
   ipAddress String?
   userAgent String?
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("session")
 }
@@ -95,7 +95,7 @@ model Verification {
 model Product {
   id          String        @id @default(cuid())
   sellerId    String
-  seller      User          @relation("SellerProducts", fields: [sellerId], references: [id], onDelete: Restrict)
+  seller      User          @relation("SellerProducts", fields: [sellerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   name        String
   description String
   category    String

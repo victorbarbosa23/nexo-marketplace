@@ -46,7 +46,7 @@ Consultas SQL somente de leitura executadas em 12/11/2026 na branch `production`
 - `ProductStatus`: APROVADO, PENDENTE, REJEITADO.
 - `PurchaseStatus`: SIMULADA.
 - `ReportStatus`: ABERTA, EM_ANALISE, RESOLVIDA.
-- Chaves estrangeiras: account.userId -> user.id; session.userId -> user.id; product.sellerId -> user.id; purchase.buyerId -> user.id; purchase.productId -> product.id; report.reporterId -> user.id; report.productId -> product.id.
+- Chaves estrangeiras e regras observadas: account.userId -> user.id (ON DELETE CASCADE, ON UPDATE CASCADE); session.userId -> user.id (CASCADE/CASCADE); product.sellerId -> user.id (RESTRICT/CASCADE); purchase.buyerId -> user.id (RESTRICT/CASCADE); purchase.productId -> product.id (RESTRICT/CASCADE); report.reporterId -> user.id (RESTRICT/CASCADE); report.productId -> product.id (RESTRICT/CASCADE).
 - Índices: PKs nas sete tabelas; unique user.email e session.token; product(status, category), product(status, niche), purchase(buyerId), report(status).
 - A tabela `report` não possui coluna `updatedAt`.
 - As tabelas físicas são minúsculas. Os modelos Prisma Product, Purchase e Report usam `@@map` para corresponder a `product`, `purchase` e `report`.

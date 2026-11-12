@@ -15,7 +15,8 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 ### Revisão humana baseada na inspeção do Neon
 - Consultas SQL somente de leitura executadas na branch `production`, schema `public`.
 - Confirmadas as sete tabelas e quatro enums, incluindo todos os valores.
-- Confirmadas as chaves primárias e estrangeiras entre usuários, produtos, compras, denúncias, contas e sessões.
+- Confirmadas as chaves primárias e estrangeiras entre usuários, produtos, compras, denúncias, contas e sessões, incluindo regras ON DELETE e ON UPDATE.
+- Explicitadas no Prisma as regras referenciais verificadas: CASCADE para account/session em exclusão, RESTRICT para registros comerciais, e CASCADE em atualização de chave para todas as relações.
 - Confirmados os índices existentes: PKs, unique `user.email`, unique `session.token`, `product(status, category)`, `product(status, niche)`, `purchase(buyerId)` e `report(status)`.
 - Corrigido `User.role` de String para enum `Role`.
 - Removido `Report.updatedAt` do Prisma, pois a coluna não existe na tabela real.
@@ -31,7 +32,7 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - A compatibilidade Better Auth/Prisma, build, rotas de negócio, painéis por perfil, testes e deploy ainda precisam ser validados.
 
 ### Pendências
-- Executar validação Prisma e comparação read-only com o Neon.
+- Executar validação Prisma e comparação read-only com o Neon; revisar compatibilidade da introspecção e dos índices.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.
 - Implementar catálogo, gestão de produtos, compras e denúncias de ponta a ponta.
 - Provisionar administrador com procedimento seguro.
