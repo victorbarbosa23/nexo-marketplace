@@ -80,3 +80,29 @@ Não aplicar migrations destrutivas, reset ou db push no banco Neon existente. C
 
 ## 10. Condição de conclusão
 A entrega só estará concluída quando o fluxo principal persistir no Neon, os critérios de aceite forem testados, o checklist de segurança for revisado, a aplicação estiver publicada em HTTPS e o repositório/histórico/documentação estiverem acessíveis ao professor.
+
+## 11. Estado real da implementação em 12/11/2026
+
+### Implementado no código
+- Cadastro por e-mail e senha, login e logout com Better Auth.
+- Papel inicial COMPRADOR; ativação do papel VENDEDOR pelo próprio comprador; papel ADMIN somente por promoção manual no Neon.
+- Autorização no servidor para as rotas de comprador, vendedor e administrador.
+- Cadastro, listagem e edição de produtos próprios pelo vendedor; alterações reenviam o produto para PENDENTE.
+- Catálogo público com pesquisa e filtros por categoria, nicho e preço; somente produtos APROVADOS são exibidos.
+- Página de detalhes de produto.
+- Aprovação e rejeição de produtos pelo administrador.
+- Registro de compra SIMULADA e histórico restrito ao comprador; não há pagamento real.
+- Registro de denúncias por compradores e vendedores e atualização de status pelo administrador.
+- Endpoint /api/health para verificar conectividade com PostgreSQL após a publicação.
+
+### Verificações concluídas
+- Schema Prisma validado com Prisma ORM 7.10.1.
+- Build de produção Next.js concluído no GitHub Actions.
+- ESLint e TypeScript concluídos no GitHub Actions.
+- npm audit --audit-level=high concluído sem vulnerabilidades de severidade alta ou crítica no conjunto instalado.
+
+### Ainda não verificado
+- Teste funcional com credenciais reais do Neon; o CI usa URLs fictícias e não acessa o banco de produção.
+- Testes manuais dos fluxos com contas reais de cada papel.
+- Comparação integral com o Anexo B da apostila.
+- Publicação e teste anônimo da aplicação na Vercel.

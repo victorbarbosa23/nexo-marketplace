@@ -21,7 +21,8 @@ Este documento registra a revisão humana feita com base nos requisitos informad
 
 - [x] GitHub Actions executou com sucesso: Prisma validate, build Next.js, ESLint e TypeScript check.
 - [x] Next.js 16.4.6 e React 19.3.1 atualizados após alerta de segurança.
-- [ ] Prisma ORM 7.10.1 e Zod 4.6.7 atualizados após alertas do npm; aguardar CI com auditoria para marcar como verificados.
+- [x] Prisma ORM 7.10.1, adaptador Neon e Zod 4.6.7 validados pelo CI.
+- [x] npm audit --audit-level=high passou sem vulnerabilidades de severidade alta ou crítica no conjunto instalado; alertas de severidade inferior podem permanecer.
 
 ## Itens pendentes de validação antes da entrega
 
