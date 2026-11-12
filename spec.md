@@ -40,14 +40,17 @@ Marketplace web de descoberta de produtos digitais de pequenos criadores e vende
 - Persistência real em PostgreSQL.
 
 ## 5. Modelo de dados observado no Neon
-As consultas de leitura executadas em 12/11/2026 identificaram as tabelas `account`, `product`, `purchase`, `report`, `session`, `user` e `verification`.
+Consultas SQL somente de leitura executadas em 12/11/2026 na branch `production`, schema `public`:
+- Tabelas: `account`, `product`, `purchase`, `report`, `session`, `user`, `verification`.
 - `Role`: ADMIN, COMPRADOR, VENDEDOR.
 - `ProductStatus`: APROVADO, PENDENTE, REJEITADO.
 - `PurchaseStatus`: SIMULADA.
 - `ReportStatus`: ABERTA, EM_ANALISE, RESOLVIDA.
-- Chaves estrangeiras observadas: account.userId -> user.id; session.userId -> user.id; product.sellerId -> user.id; purchase.buyerId -> user.id; purchase.productId -> product.id; report.reporterId -> user.id; report.productId -> product.id.
-- A tabela `report` não possui coluna `updatedAt` na inspeção realizada. O schema Prisma foi ajustado para não presumir essa coluna.
-- A existência de índices únicos de e-mail e token ainda precisa ser conferida separadamente.
+- Chaves estrangeiras: account.userId -> user.id; session.userId -> user.id; product.sellerId -> user.id; purchase.buyerId -> user.id; purchase.productId -> product.id; report.reporterId -> user.id; report.productId -> product.id.
+- Índices: PKs nas sete tabelas; unique user.email e session.token; product(status, category), product(status, niche), purchase(buyerId), report(status).
+- A tabela `report` não possui coluna `updatedAt`.
+- As tabelas físicas são minúsculas. Os modelos Prisma Product, Purchase e Report usam `@@map` para corresponder a `product`, `purchase` e `report`.
+- Índices do Prisma foram ajustados para representar os índices existentes, sem declarar índices extras não observados.
 
 ## 6. Limites do MVP
 Sem pagamentos reais, repasses, entrega automática de arquivos, chat, avaliações, afiliados, recomendação por IA ou aplicativo nativo. A compra é somente demonstrativa.
@@ -73,7 +76,7 @@ Sem pagamentos reais, repasses, entrega automática de arquivos, chat, avaliaç�
 Next.js App Router, TypeScript, PostgreSQL/Neon, Prisma, Better Auth, Git/GitHub e Vercel. Variáveis: DATABASE_URL, DIRECT_URL, BETTER_AUTH_SECRET e BETTER_AUTH_URL. Nunca versionar credenciais reais.
 
 ## 9. Segurança e banco
-Não aplicar migrations destrutivas, reset ou db push no banco Neon existente. Primeiro inspecionar o schema real, conferir índices e constraints, comparar a saída de `prisma db pull` em ambiente controlado e fazer backup. Nenhuma migration será aplicada sem revisão.
- 
+Não aplicar migrations destrutivas, reset ou db push no banco Neon existente. Conferir schema com introspecção controlada e backup antes de qualquer migration. Nenhuma migration será aplicada sem revisão.
+
 ## 10. Condição de conclusão
 A entrega só estará concluída quando o fluxo principal persistir no Neon, os critérios de aceite forem testados, o checklist de segurança for revisado, a aplicação estiver publicada em HTTPS e o repositório/histórico/documentação estiverem acessíveis ao professor.

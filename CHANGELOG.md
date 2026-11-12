@@ -13,12 +13,14 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - Registradas a spec final em revisão e a documentação do estado real do projeto.
 
 ### Revisão humana baseada na inspeção do Neon
-- Foram executadas consultas SQL somente de leitura na branch `production`, schema `public`.
-- Confirmadas as sete tabelas: `account`, `product`, `purchase`, `report`, `session`, `user` e `verification`.
-- Confirmados os enums e seus valores: Role (ADMIN, COMPRADOR, VENDEDOR), ProductStatus (APROVADO, PENDENTE, REJEITADO), PurchaseStatus (SIMULADA) e ReportStatus (ABERTA, EM_ANALISE, RESOLVIDA).
-- Confirmadas as relações de chave estrangeira entre usuários, produtos, compras, denúncias, contas e sessões.
-- Corrigido o schema Prisma: o campo `User.role` passou de String para enum `Role`, de acordo com o tipo PostgreSQL existente.
-- Corrigido o schema Prisma: removido `Report.updatedAt`, pois a inspeção confirmou que essa coluna não existe na tabela `report`.
+- Consultas SQL somente de leitura executadas na branch `production`, schema `public`.
+- Confirmadas as sete tabelas e quatro enums, incluindo todos os valores.
+- Confirmadas as chaves primárias e estrangeiras entre usuários, produtos, compras, denúncias, contas e sessões.
+- Confirmados os índices existentes: PKs, unique `user.email`, unique `session.token`, `product(status, category)`, `product(status, niche)`, `purchase(buyerId)` e `report(status)`.
+- Corrigido `User.role` de String para enum `Role`.
+- Removido `Report.updatedAt` do Prisma, pois a coluna não existe na tabela real.
+- Adicionados `@@map("product")`, `@@map("purchase")` e `@@map("report")`, pois os nomes físicos das tabelas são minúsculos.
+- Ajustados os índices Prisma para corresponder aos índices observados, removendo declarações de índices não existentes e mapeando os nomes reais.
 - Não foi executada nenhuma migration, alteração de tabela, inserção ou exclusão de dados.
 
 ### Decisões e limites
@@ -26,12 +28,10 @@ Registro cronológico de implementação, decisões, revisões humanas e correç
 - A conta pública recebe papel padrão COMPRADOR; o papel ADMIN não pode ser escolhido pelo formulário de cadastro.
 - A compra permanece simulada, sem gateway, cobrança ou dados de cartão.
 - A branch de reconstrução permanece separada da main para revisão sem substituir o planejamento original.
-- A inspeção de índices únicos (e-mail e token de sessão), a validação de compatibilidade Better Auth/Prisma e a conferência de migrations continuam pendentes.
-- As rotas de negócio, os painéis por perfil, os testes e o deploy ainda não foram concluídos.
+- A compatibilidade Better Auth/Prisma, build, rotas de negócio, painéis por perfil, testes e deploy ainda precisam ser validados.
 
 ### Pendências
-- Conferir índices e constraints restantes do Neon.
-- Validar o schema com `prisma db pull` e Prisma CLI sem escrever no banco.
+- Executar validação Prisma e comparação read-only com o Neon.
 - Implementar os fluxos de vendedor, comprador e administrador no servidor.
 - Implementar catálogo, gestão de produtos, compras e denúncias de ponta a ponta.
 - Provisionar administrador com procedimento seguro.
