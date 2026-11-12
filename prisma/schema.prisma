@@ -6,9 +6,19 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
-enum ProductStatus { PENDENTE APROVADO REJEITADO }
-enum PurchaseStatus { SIMULADA }
-enum ReportStatus { ABERTA EM_ANALISE RESOLVIDA }
+enum ProductStatus {
+  PENDENTE
+  APROVADO
+  REJEITADO
+}
+enum PurchaseStatus {
+  SIMULADA
+}
+enum ReportStatus {
+  ABERTA
+  EM_ANALISE
+  RESOLVIDA
+}
 model User {
   id String @id
   name String
@@ -74,36 +84,40 @@ model Product {
   description String
   category String
   niche String
-  price Decimal @db.Decimal(10,2)
+  price Decimal @db.Decimal(10, 2)
   status ProductStatus @default(PENDENTE)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   purchases Purchase[]
   reports Report[]
-  @@index([status,createdAt])
-  @@index([sellerId,createdAt])
+  @@index([status, createdAt])
+  @@index([sellerId, createdAt])
+  @@index([category, niche])
 }
 model Purchase {
   id String @id @default(cuid())
   buyerId String
-  buyer User @relation("BuyerPurchases",fields:[buyerId],references:[id],onDelete:Restrict)
+  buyer User @relation("BuyerPurchases", fields: [buyerId], references: [id], onDelete: Restrict)
   productId String
-  product Product @relation(fields:[productId],references:[id],onDelete:Restrict)
-  priceAtPurchase Decimal @db.Decimal(10,2)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  priceAtPurchase Decimal @db.Decimal(10, 2)
   status PurchaseStatus @default(SIMULADA)
   createdAt DateTime @default(now())
-  @@index([buyerId,createdAt])
+  @@index([buyerId, createdAt])
+  @@index([productId])
 }
 model Report {
   id String @id @default(cuid())
   reporterId String
-  reporter User @relation("ReporterReports",fields:[reporterId],references:[id],onDelete:Restrict)
+  reporter User @relation("ReporterReports", fields: [reporterId], references: [id], onDelete: Restrict)
   productId String
-  product Product @relation(fields:[productId],references:[id],onDelete:Restrict)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
   reason String
   description String
   status ReportStatus @default(ABERTA)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@index([status,createdAt])
+  @@index([status, createdAt])
+  @@index([reporterId])
+  @@index([productId])
 }

@@ -1,28 +1,39 @@
-# Nexo
+# Nexo Marketplace
 
-Marketplace de descoberta de produtos digitais, voltado a pequenos criadores e vendedores independentes e a compradores que procuram produtos específicos ou de nicho.
+Marketplace web para descoberta de produtos digitais de pequenos criadores e vendedores independentes.
 
-## Estado do projeto
+## Estado atual
 
-Planejamento inicial. A aplicação ainda será implementada.
+Reconstrução do MVP em andamento na branch `rebuild/nexo-mvp`. A branch `main` preserva o planejamento inicial. O código desta branch contém a fundação Next.js, TypeScript, Prisma e Better Auth, além da interface pública inicial e telas de autenticação.
 
-## Documentos
-
-- [`spec.md`](./spec.md): especificação formal e fonte principal dos requisitos do MVP.
-- [`docs/plano-estrategico.md`](./docs/plano-estrategico.md): visão estratégica, posicionamento, riscos, validação e ideias de evolução. Este documento é contextual; em caso de conflito de escopo, prevalece a `spec.md` aprovada.
-- [`CHANGELOG.md`](./CHANGELOG.md): registro das decisões, alterações, revisões e correções feitas durante o desenvolvimento.
+**Atenção:** a aplicação ainda não está pronta para produção. A conexão com Neon, as migrations, os fluxos completos por perfil, os testes e o deploy precisam ser concluídos e verificados antes da entrega.
 
 ## Stack planejada
 
-- Next.js e TypeScript
+- Next.js App Router e TypeScript
+- PostgreSQL no Neon
 - Prisma ORM
-- PostgreSQL hospedado no Neon
-- Better Auth, conforme a especificação
-- Git e GitHub para versionamento
-- Vercel para publicação
+- Better Auth
+- Vercel
 
-A stack e os detalhes da autenticação devem ser revisados durante o desenvolvimento antes de serem considerados implementados.
+## Desenvolvimento local
 
-## Segurança
+1. Instale Node.js 22.12 ou superior.
+2. Copie `.env.example` para `.env.local`.
+3. Preencha `DATABASE_URL`, `DIRECT_URL`, `BETTER_AUTH_SECRET` e `BETTER_AUTH_URL` com valores do ambiente.
+4. Instale dependências com `npm install`.
+5. Gere o Prisma Client com `npm run db:generate`.
+6. Após revisar o schema contra o banco de destino e criar/aprovar uma migration, execute `npx prisma migrate deploy`.
+7. Inicie com `npm run dev`.
 
-Nunca adicione senhas reais, tokens, chaves ou strings de conexão ao repositório. Use variáveis de ambiente locais, ignoradas pelo Git, e cadastre os valores de produção nas configurações do serviço de hospedagem.
+Não execute migrations no banco Neon existente sem comparar previamente o schema e fazer backup. Não use `db push` ou comandos de reset em banco com dados que precisam ser preservados.
+
+## Variáveis de ambiente
+
+Consulte `.env.example`. Nunca faça commit de arquivos `.env`, senhas, tokens ou strings de conexão reais.
+
+## Documentação
+
+- [Spec](./spec.md)
+- [Changelog](./CHANGELOG.md)
+- [Plano estratégico](./docs/plano-estrategico.md)
