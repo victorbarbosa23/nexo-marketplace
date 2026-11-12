@@ -2,13 +2,13 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 
-export function ReportForm({ productId, signedIn }: { productId: string; signedIn: boolean }) {
+export function ReportForm({ productId, canReport, signedIn }: { productId: string; canReport: boolean; signedIn: boolean }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setBusy(true); setMessage(""); setError("");
-    const form = new FormData(event.currentTarget);
+    event.preventDefault(); const formElement = event.currentTarget; setBusy(true); setMessage(""); setError("");
+    const form = new FormData(formElement);
     const response = await fetch("/api/reports", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -17,10 +17,11 @@ export function ReportForm({ productId, signedIn }: { productId: string; signedI
     const body = await response.json().catch(() => ({}));
     setBusy(false);
     if (!response.ok) { setError(body.error ?? "Não foi possível registrar a denúncia."); return; }
-    event.currentTarget.reset();
+    formElement.reset();
     setMessage("Denúncia registrada. A equipe responsável fará a análise.");
   }
   if (!signedIn) return <p className="muted"><Link href="/entrar">Entre na sua conta</Link> para denunciar este produto.</p>;
+  if (!canReport) return <p className="muted">Denúncias estão disponíveis para compradores e vendedores.</p>;
   return <form className="form-card" onSubmit={submit}>
     <h3>Denunciar produto</h3>
     <label>Motivo<input name="reason" required minLength={3} maxLength={100} /></label>

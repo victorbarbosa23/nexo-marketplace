@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export function PurchaseButton({ productId, signedIn }: { productId: string; signedIn: boolean }) {
+export function PurchaseButton({ productId, canPurchase, signedIn }: { productId: string; canPurchase: boolean; signedIn: boolean }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -15,5 +15,6 @@ export function PurchaseButton({ productId, signedIn }: { productId: string; sig
     setMessage("Compra demonstrativa registrada! Consulte seu histórico no painel.");
   }
   if (!signedIn) return <p><Link className="button" href="/entrar">Entre para registrar uma compra demonstrativa</Link></p>;
+  if (!canPurchase) return <p className="muted">A compra demonstrativa está disponível para contas de comprador.</p>;
   return <div><button className="button" onClick={buy} disabled={busy}>{busy ? "Registrando…" : "Registrar compra demonstrativa"}</button>{message && <p className="form-success">{message}</p>}{error && <p className="form-error">{error}</p>}</div>;
 }

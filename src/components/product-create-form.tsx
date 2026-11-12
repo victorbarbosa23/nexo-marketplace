@@ -8,8 +8,8 @@ export function ProductCreateForm() {
   const [error, setError] = useState("");
   const router = useRouter();
   async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setBusy(true); setMessage(""); setError("");
-    const form = new FormData(event.currentTarget);
+    event.preventDefault(); const formElement = event.currentTarget; setBusy(true); setMessage(""); setError("");
+    const form = new FormData(formElement);
     const payload = {
       name: String(form.get("name") ?? ""),
       description: String(form.get("description") ?? ""),
@@ -21,7 +21,7 @@ export function ProductCreateForm() {
     const body = await response.json().catch(() => ({}));
     setBusy(false);
     if (!response.ok) { setError(body.error ?? "Não foi possível cadastrar o produto."); return; }
-    event.currentTarget.reset();
+    formElement.reset();
     setMessage("Produto enviado para análise. Ele aparecerá no catálogo após a aprovação.");
     router.refresh();
   }
